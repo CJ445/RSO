@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Card, ListGroup } from 'react-bootstrap';
-import axios from 'axios';
+import axios from '../utils/axios';
 
 function LogsPanel() {
   const [logs, setLogs] = useState([]);

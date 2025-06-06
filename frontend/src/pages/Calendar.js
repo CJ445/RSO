@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Button, Card, Form, OverlayTrigger, Tooltip } from 'react-bootstrap';
-import axios from 'axios';
+import axios from '../utils/axios';
 import './Calendar.css';
 
 function Calendar() {

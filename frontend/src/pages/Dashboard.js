@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Button, Card, Table, Form, Modal, Nav, Tab, Badge, Tooltip, OverlayTrigger } from 'react-bootstrap';
-import axios from 'axios';
+import axios from '../utils/axios';
 import TaskProgressBar from '../components/TaskProgressBar';
 import ActiveTaskTimer from '../components/ActiveTaskTimer';
 import ResourceAssignmentManager from '../components/ResourceAssignmentManager';
@@ -189,7 +189,7 @@ function Dashboard() {
   const runInitialSchedule = async () => {
     try {
       setLoading(true);
-      await axios.post('/api/schedule');
+      await axios.post('/api/schedule', {});
       await fetchSchedules();
       await fetchTaskDependencies();
       // viewMode dropdown removed

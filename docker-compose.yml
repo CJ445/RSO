@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
   frontend:
     build:
@@ -15,6 +13,8 @@ services:
       - REACT_APP_API_URL=http://localhost:5000
       - WDS_SOCKET_PORT=3000
     container_name: rso-frontend
+    networks:
+      - rso-network
 
   backend:
     build:
@@ -25,7 +25,8 @@ services:
     volumes:
       - ./src:/app/src
     depends_on:
-      - db
+      db:
+        condition: service_healthy
     environment:
       - DATABASE_URL=postgresql://postgres:root@db:5432/RSO
       - FLASK_ENV=development
@@ -33,8 +34,10 @@ services:
       - PYTHONDONTWRITEBYTECODE=1
       - PYTHONUNBUFFERED=1
     container_name: rso-backend
-    # We use a custom command to wait for the database to be ready before starting the Flask app
-    command: sh -c "sleep 10 && python src/api.py"
+    # Use proper wait script to ensure database is ready
+    command: ["python", "wait-for-db.py"]
+    networks:
+      - rso-network
 
   db:
     build:
@@ -49,7 +52,18 @@ services:
     ports:
       - "5433:5432"
     container_name: rso-db
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d RSO"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - rso-network
 
 volumes:
   postgres_data:
     name: rso-postgres-data
+
+networks:
+  rso-network:
+    driver: bridge

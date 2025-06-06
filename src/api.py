@@ -3394,4 +3394,4 @@ def check_resource_conflicts(conn, task_id, resource_id=None, employee_id=None):
         cur.close()
 
 if __name__ == '__main__':
-    app.run(debug=True, port=5000)
+    app.run(debug=True, host='0.0.0.0', port=5000)

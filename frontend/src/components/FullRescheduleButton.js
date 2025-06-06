@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Button, Modal, Alert, Spinner } from 'react-bootstrap';
-import axios from 'axios';
+import axios from '../utils/axios';
 
 /**
  * A button component that triggers a full reschedule of all incomplete tasks

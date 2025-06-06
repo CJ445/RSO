@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Modal, Button, Form, Row, Col, ListGroup, Badge } from 'react-bootstrap';
-import axios from 'axios';
+import axios from '../utils/axios';
 import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
 

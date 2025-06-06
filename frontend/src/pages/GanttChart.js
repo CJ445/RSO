@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Button, Card, Form, Modal, Badge } from 'react-bootstrap';
-import axios from 'axios';
+import axios from '../utils/axios';
 import 'dhtmlx-gantt/codebase/dhtmlxgantt.css';
 
 function GanttChart() {
