@@ -1,7 +1,8 @@
 services:
   frontend:
     build:
-      context: ./frontend
+      context: .
+      dockerfile: Dockerfile.frontend
     ports:
       - "3000:3000"
     volumes:
@@ -23,26 +24,26 @@ services:
     ports:
       - "5000:5000"
     volumes:
-      - ./src:/app/src
+      - ./backend:/app/backend
     depends_on:
       db:
         condition: service_healthy
     environment:
       - DATABASE_URL=postgresql://postgres:root@db:5432/RSO
       - FLASK_ENV=development
-      - FLASK_APP=src/api.py
+      - FLASK_APP=backend/api.py
       - PYTHONDONTWRITEBYTECODE=1
       - PYTHONUNBUFFERED=1
     container_name: rso-backend
     # Use proper wait script to ensure database is ready
-    command: ["python", "wait-for-db.py"]
+    command: ["python", "database/wait-for-db.py"]
     networks:
       - rso-network
 
   db:
     build:
-      context: ./src/database
-      dockerfile: Dockerfile.db
+      context: .
+      dockerfile: Dockerfile.database
     volumes:
       - postgres_data:/var/lib/postgresql/data
     environment:

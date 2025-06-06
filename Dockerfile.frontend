@@ -2,11 +2,11 @@ FROM node:16-alpine
 
 WORKDIR /app
 
-COPY package*.json ./
+COPY frontend/package*.json ./
 RUN npm install
 RUN mkdir -p node_modules/.cache && chmod -R 777 node_modules/.cache
 
-COPY . .
+COPY frontend/ .
 
 EXPOSE 3000
 

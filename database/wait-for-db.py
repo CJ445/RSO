@@ -39,7 +39,7 @@ if __name__ == "__main__":
     if wait_for_db():
         print("Starting Flask application...")
         # Import and run the Flask app
-        os.execv(sys.executable, [sys.executable, "src/api.py"])
+        os.execv(sys.executable, [sys.executable, "backend/api.py"])
     else:
         print("Failed to connect to database. Exiting.")
         sys.exit(1)

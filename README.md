@@ -33,7 +33,7 @@ This project provides a visual interface to interact with the scheduling and res
    - Install PostgreSQL if you haven't already
    - Create a new database using the setup.sql file:
      ```bash
-     psql -U postgres -f src/database/setup.sql
+     psql -U postgres -f database/setup.sql
      ```
    - If you're using pgAdmin:
      - Open pgAdmin
@@ -61,7 +61,7 @@ This project provides a visual interface to interact with the scheduling and res
 
 4. **Install backend dependencies**
    ```bash
-   pip install -r requirements.txt
+   pip install -r backend/requirements.txt
    ```
    
    This will install all the required Python packages including:
@@ -84,7 +84,7 @@ This project provides a visual interface to interact with the scheduling and res
 
 1. **Start the Backend Server**
    ```bash
-   cd src
+   cd backend
    python api.py
    ```
    This will start the Flask server on http://localhost:5000
@@ -106,7 +106,7 @@ The application is configured to connect to PostgreSQL with these default settin
 - Password: `root`
 - Host: `localhost`
 
-If your PostgreSQL setup is different, you'll need to modify the connection settings in `src/api.py`:
+If your PostgreSQL setup is different, you'll need to modify the connection settings in `backend/api.py`:
 
 ```python
 conn = psycopg2.connect(
@@ -147,37 +147,60 @@ conn = psycopg2.connect(
 
 1. **Database Connection Error**
    - Verify PostgreSQL is running
-   - Check your database credentials in `src/api.py`
+   - Check your database credentials in `backend/api.py`
    - Make sure the RSO database exists
 
 2. **Missing Dependencies**
-   - For backend: `pip install -r requirements.txt` to install all required Python packages
+   - For backend: `pip install -r backend/requirements.txt` to install all required Python packages
    - For frontend: Make sure you've run `npm install` in the frontend directory
 
 3. **Port Conflicts**
-   - If port 5000 is in use, modify the port in `src/api.py`
+   - If port 5000 is in use, modify the port in `backend/api.py`
    - If port 3000 is in use, React will prompt you to use a different port
 
 ## Project Structure
 
 ```
 RSO/
-├── src/                    # Backend code
+├── backend/                # Backend code
 │   ├── api.py              # Flask API
 │   ├── main.py             # CP-SAT scheduler
 │   ├── rescheduler.py      # Rescheduling logic
-│   └── database/           # Database scripts
-│       └── setup.sql       # Database schema with tables and sample data
+│   └── requirements.txt    # Python dependencies
+├── database/               # Database scripts
+│   ├── setup.sql           # Database schema with tables and sample data
+│   └── wait-for-db.py      # Database connection helper for Docker
 ├── frontend/               # React frontend
 │   ├── src/
 │   │   ├── components/     # Reusable components
 │   │   ├── pages/          # Page components
 │   │   └── App.js          # Main application
 │   └── package.json        # Frontend dependencies
-├── requirements.txt        # Python dependencies
+├── Dockerfile.backend      # Backend Docker configuration
+├── Dockerfile.frontend     # Frontend Docker configuration
+├── Dockerfile.database     # Database Docker configuration
+├── docker-compose.yml      # Multi-container Docker setup
+├── DOCKER_README.md        # Docker setup guide
 ├── .gitignore              # Git ignore file
 └── README.md               # Project documentation
 ```
+
+## Docker Setup (Recommended)
+
+For the easiest setup, use Docker to run all services with a single command:
+
+1. **Prerequisites**: Install Docker and Docker Compose
+
+2. **Run the application**:
+   ```bash
+   docker-compose up --build
+   ```
+
+3. **Access the application**:
+   - Frontend: http://localhost:3000
+   - Backend API: http://localhost:5000
+
+For detailed Docker instructions, see [DOCKER_README.md](DOCKER_README.md).
 
 ## Pushing Code to GitHub
 
